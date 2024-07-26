@@ -27,7 +27,6 @@ There is an in-memory h2 database that is used to store the data.
 
 - [ ] Add a specification file for GetAllCustomers to do customer filtering
 - [ ] Add a specification file for GetAllFlights to do flights filtering
-- [ ] Add validations on the Request objects
 - [ ] Add spring actuator for monitoring
 - [ ] Add swagger annotations on all the endpoints
 -
