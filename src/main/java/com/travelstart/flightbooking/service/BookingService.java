@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface BookingService {
 
-    List<Booking> getAllBookings(Optional<String> customerName, Optional<String> bookingDate);
+    List<Booking> getAllBookings();
 
     Booking getBookingById(Long bookingId);
 

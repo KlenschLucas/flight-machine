@@ -12,14 +12,12 @@ import com.travelstart.flightbooking.model.Flight;
 import com.travelstart.flightbooking.repository.BookingRepository;
 import com.travelstart.flightbooking.repository.CustomerRepository;
 import com.travelstart.flightbooking.repository.FlightRepository;
-import com.travelstart.flightbooking.specification.BookingSpecification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookingServiceImpl implements BookingService {
@@ -36,8 +34,8 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<Booking> getAllBookings(Optional<String> customerName, Optional<String> bookingDate) {
-        return bookingRepository.findAll(new BookingSpecification(customerName, bookingDate));
+    public List<Booking> getAllBookings() {
+        return bookingRepository.findAll();
     }
 
     @Override
@@ -59,8 +57,10 @@ public class BookingServiceImpl implements BookingService {
         log.info("Checking if there are enough seats available for new booking");
         List<Booking> previousBookings = bookingRepository.findByFlight(flight);
         int previousSeats = previousBookings.stream().mapToInt(Booking::getNumberOfSeatsBooked).sum();
+        log.info("Total number of seats on Flight: {} - avaliable seats: {} - already taken {}", flight.getAvailableSeats(), flight.getAvailableSeats() - previousSeats, previousSeats);
 
-        if (flight.getAvailableSeats() - previousSeats > bookingRequest.numberOfSeatsBooked()) {
+
+        if (flight.getAvailableSeats() - previousSeats < bookingRequest.numberOfSeatsBooked()) {
             log.error("Not enough seats available for new booking");
             throw new NoSeatsAvailableOnFlightException("Not enough seats available");
         }
@@ -90,12 +90,15 @@ public class BookingServiceImpl implements BookingService {
         Customer customer = customerRepository.findById(bookingRequest.customerId()).orElseThrow(() -> new CustomerNotFoundException("Customer with id " + bookingRequest.customerId() + " not found"));
         existingBooking.setCustomer(customer);
 
+        existingBooking.setFlight(flight);
+        existingBooking.setNumberOfSeatsBooked(bookingRequest.numberOfSeatsBooked());
+
         // check if there are enough seats available
         log.info("Checking if there are enough seats available on update of booking");
         List<Booking> previousBookings = bookingRepository.findByFlight(flight);
         int previousSeats = previousBookings.stream().mapToInt(Booking::getNumberOfSeatsBooked).sum();
 
-        if (flight.getAvailableSeats() - previousSeats + existingBooking.getNumberOfSeatsBooked() > bookingRequest.numberOfSeatsBooked()) {
+        if (flight.getAvailableSeats() - previousSeats + existingBooking.getNumberOfSeatsBooked() < bookingRequest.numberOfSeatsBooked()) {
             log.error("Not enough seats available for update of booking");
             throw new NoSeatsAvailableOnFlightException("Not enough seats available");
         }

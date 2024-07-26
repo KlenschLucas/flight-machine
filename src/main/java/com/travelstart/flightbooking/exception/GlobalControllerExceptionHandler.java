@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalControllerExceptionHandler {
 
-    @ExceptionHandler({ConversionFailedException.class, FlightNumberNotUniqueException.class, NoSeatsAvailableOnFlightException.class})
+    @ExceptionHandler({ConversionFailedException.class, FlightNumberNotUniqueException.class, NoSeatsAvailableOnFlightException.class, IllegalArgumentException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<String> handleConversion(RuntimeException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);

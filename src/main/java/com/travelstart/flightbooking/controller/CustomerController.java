@@ -6,6 +6,7 @@ import com.travelstart.flightbooking.dto.UpdateCustomerRequest;
 import com.travelstart.flightbooking.model.Customer;
 import com.travelstart.flightbooking.service.CustomerService;
 import io.swagger.annotations.*;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,7 +47,7 @@ public class CustomerController {
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Customer created successfully"), @ApiResponse(code = 400, message = "Invalid input"), @ApiResponse(code = 500, message = "Internal server error")})
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Customer createCustomer(@ApiParam(value = "Customer object to create", required = true) @RequestBody CreateCustomerRequest createCustomerRequest) {
+    public Customer createCustomer(@ApiParam(value = "Customer object to create", required = true) @Valid @RequestBody CreateCustomerRequest createCustomerRequest) {
         return customerService.createCustomer(createCustomerRequest);
     }
 
@@ -60,7 +61,7 @@ public class CustomerController {
     @ApiOperation(value = "Update an existing customer", response = Customer.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Customer updated successfully"), @ApiResponse(code = 404, message = "Customer not found"), @ApiResponse(code = 400, message = "Invalid input"), @ApiResponse(code = 500, message = "Internal server error")})
     @PutMapping("/{id}")
-    public ResponseEntity<Customer> updateCustomer(@ApiParam(value = "ID of the customer to update", required = true) @PathVariable Long id, @ApiParam(value = "Updated customer object", required = true) @RequestBody UpdateCustomerRequest updateCustomerRequest) {
+    public ResponseEntity<Customer> updateCustomer(@ApiParam(value = "ID of the customer to update", required = true) @PathVariable Long id, @ApiParam(value = "Updated customer object", required = true) @Valid @RequestBody UpdateCustomerRequest updateCustomerRequest) {
 
         Customer updatedCustomer = customerService.updateCustomer(id, updateCustomerRequest);
         return ResponseEntity.ok(updatedCustomer);

@@ -7,11 +7,13 @@ import com.travelstart.flightbooking.service.FlightService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1/flights")
@@ -25,8 +27,8 @@ public class FlightController {
 
     @ApiOperation(value = "Retrieve all available flights", response = List.class)
     @GetMapping
-    public List<Flight> getAllFlights() {
-        return flightService.getAllFlights();
+    public List<Flight> getAllFlights(@ApiParam(value = "Origin of the flight") @RequestParam(required = false) Optional<String> origin, @ApiParam(value = "Destination of the flight") @RequestParam(required = false) Optional<String> destination, @ApiParam(value = "Flight number") @RequestParam(required = false) Optional<String> flightNumber) {
+        return flightService.getAllFlights(origin, destination, flightNumber);
     }
 
     @ApiOperation(value = "Retrieve details for a specific flight by ID", response = Flight.class)
@@ -38,13 +40,13 @@ public class FlightController {
 
     @ApiOperation(value = "Create a new flight", response = Flight.class)
     @PostMapping
-    public Flight createFlight(@ApiParam(value = "Flight object to create", required = true) @RequestBody CreateFlightRequest createFlightRequest) {
+    public Flight createFlight(@ApiParam(value = "Flight object to create", required = true) @Valid @RequestBody CreateFlightRequest createFlightRequest) {
         return flightService.createFlight(createFlightRequest);
     }
 
     @ApiOperation(value = "Update an existing flight", response = Flight.class)
     @PutMapping("/{id}")
-    public ResponseEntity<Flight> updateFlight(@ApiParam(value = "ID of the flight to update", required = true) @PathVariable Long id, @ApiParam(value = "Updated flight object", required = true) @RequestBody UpdateFlightRequest updateFlightRequest) {
+    public ResponseEntity<Flight> updateFlight(@ApiParam(value = "ID of the flight to update", required = true) @PathVariable Long id, @ApiParam(value = "Updated flight object", required = true) @Valid @RequestBody UpdateFlightRequest updateFlightRequest) {
         Flight updatedFlight = flightService.updateFlight(id, updateFlightRequest);
         return ResponseEntity.ok(updatedFlight);
     }
