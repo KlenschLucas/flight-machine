@@ -1,0 +1,98 @@
+## Customers
+
+### Create a new customer
+POST localhost:8080/v1/customers
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "john@gmail.com",
+    "phoneNumber": "1234567890"
+}
+
+
+### GET all customers
+GET http://localhost:8080/v1/customers
+
+
+### GET customer by id
+GET http://localhost:8080/v1/customers/1
+
+### PUT update customer
+PUT http://localhost:8080/v1/customers/1
+Content-Type: application/json
+
+{
+  "name": "Johnny Doe",
+  "email": "klensch.lucas@gmail.com",
+  "phoneNumber": "1234567890"
+}
+
+
+### GET all bookings
+GET http://localhost:8080/v1/bookings
+
+### GET all bookings with filters
+GET http://localhost:8080/v1/bookings
+
+
+
+### POST create booking
+POST http://localhost:8080/v1/bookings
+Content-Type: application/json
+
+{
+  "flightNumber": "ABC123",
+  "customerId": 1,
+  "bookingDate": "2021-01-01"
+}
+
+### PUT update booking
+PUT http://localhost:8080/v1/bookings
+Content-Type: application/json
+
+{
+  "flightNumber": "ABC123",
+  "customerId": 1,
+  "bookingDate": "2021-01-01"
+}
+
+### DELETE booking
+DELETE http://localhost:8080/v1/bookings/1
+
+### GET booking by id
+GET http://localhost:8080/v1/bookings/1
+
+## Flights
+
+### GET all flights
+GET http://localhost:8080/v1/flights
+
+### GET flight by id
+GET http://localhost:8080/v1/flights/1
+
+### PUT update flight
+PUT http://localhost:8080/v1/flights/1
+Content-Type: application/json
+
+{
+  "flightNumber": "ABC123",
+  "origin": "MIA",
+  "destination": "NYC",
+  "departureTime": "2021-01-01T10:00:00",
+  "arrivalTime": "2021-01-01T12:00:00",
+  "price": 100.00
+}
+
+### Create a new flight
+POST localhost:8080/v1/flights
+Content-Type: application/json
+
+{
+  "flightNumber": "ABC123",
+  "origin": "MIA",
+  "destination": "NYC",
+  "departureTime": "2021-01-01T10:00:00",
+  "arrivalTime": "2021-01-01T12:00:00",
+  "price": 100.00
+}
