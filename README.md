@@ -23,6 +23,11 @@ There is an in-memory h2 database that is used to store the data.
 - h2 console will be available at `http://localhost:8080/h2-console`
 - actuator will be available at `http://localhost:8080/actuator`
 
+### HTTP Requests
+
+- A file `TestRequest.http` is available in the root directory that contains all the requests that can be made to the
+  application.
+
 ### TODO
 
 - [ ] Add a specification file for GetAllCustomers to do customer filtering
