@@ -26,12 +26,12 @@ There is an in-memory h2 database that is used to store the data.
 ### HTTP Requests
 
 - A file `TestRequest.http` is available in the root directory that contains all the requests that can be made to the
-  application.
+  application. This can be used to test all the application endpoints.  
 
 ### TODO
 
 - [ ] Add a specification file for GetAllCustomers to do customer filtering
-- [ ] Add a specification file for GetAllFlights to do flights filtering
+- [ ] Add a specification file for GetAllBookings to do bookings filtering
 - [ ] Add spring actuator for monitoring
 - [ ] Add swagger annotations on all the endpoints
 -
